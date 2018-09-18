@@ -5,7 +5,9 @@ var router = express.Router();
 var burger = require("../models/burger.js");
 
 router.get("/", function (req, res) {
-    burger.all(function (data) {
+
+    //not passing as array, object is not acting properly
+    burger.selectAll(function (data) {
         var hbsObject = {
             burgers: data
         };
@@ -15,7 +17,7 @@ router.get("/", function (req, res) {
 });
 
 router.post("/api/burgers", function (req, res) {
-    burger.create([
+    burger.insertOne([
         "burger_name", "0"
     ], [
             req.body.name, req.body.null
@@ -29,7 +31,7 @@ router.put("/api/burgers/:id", function (req, res) {
 
     console.log("condition ", condition);
 
-    cat.update({
+    cat.updateOne({
         devoured: req.body.sleepy
     },
         condition, function (result) {
